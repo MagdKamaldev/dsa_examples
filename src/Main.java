@@ -1,10 +1,10 @@
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-      //last update
-      System.out.println("m");
+        Scanner in = new Scanner(System.in);
+        int number1 = in.nextInt();
     }
+
+
 }
