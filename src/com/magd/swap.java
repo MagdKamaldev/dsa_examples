@@ -13,5 +13,6 @@ public class swap {
         int temp = arr[index1];
         arr[index1]=arr[index2];
         arr[index2]=temp;
+        System.out.println("222222");
     }
 }
