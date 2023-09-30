@@ -1,4 +1,4 @@
-package com.magd;
+package com.array;
 
 import java.util.Arrays;
 
