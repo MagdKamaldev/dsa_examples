@@ -5,11 +5,17 @@ public class pangram_sentence {
         System.out.println(checkIfPangram("thequickbrownfoxjumpsoverthelazydog"));
     }
     public static boolean checkIfPangram(String sentence) {
-    boolean isPangram = false;
-    String [] alphabet =  {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
-    for(String character : alphabet){
-
-    }
-    return isPangram;
+        boolean[] seen = new boolean[26];
+        for (char c : sentence.toCharArray()) {
+            if (Character.isLowerCase(c)) {
+                seen[c - 'a'] = true;
+            }
+        }
+        for (boolean letter : seen) {
+            if (!letter) {
+                return false;
+            }
+        }
+        return true;
     }
 }
