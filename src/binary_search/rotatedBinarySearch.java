@@ -40,7 +40,7 @@ public class rotatedBinarySearch {
             if(mid<end && arr[mid]>arr[mid+1]){
                 return mid;
             }
-            else if(mid>start && arr[mid]<arr[mid-1]){
+            else if(mid> start && arr[mid]<arr[mid-1]){
                 return mid-1;
             }else if(arr[mid]<=arr[start]){
                 end = mid-1;
