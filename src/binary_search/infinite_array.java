@@ -13,9 +13,9 @@ public class infinite_array {
            start = temp;
            end = end + (end - start + 1) * 2;
        }
-       return binaryserch(arr,target,start,end);
+       return binarysearch(arr,target,start,end);
     }
-    static int binaryserch(int [] arr,int target,int start,int end){
+    static int binarysearch(int [] arr,int target,int start,int end){
 
         while(start<=end){
             int mid = start+(end-start)/2;
