@@ -2,7 +2,7 @@ package binary_search;
 
 public class infinite_array {
     public static void main(String[] args) {
-
+        
     }
 
     static int answer(int [] arr,int target){
