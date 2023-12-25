@@ -1,5 +1,4 @@
-package bubble_sort;
-
+package sorting;
 import java.util.Arrays;
 
 public class sorting {
