@@ -40,10 +40,10 @@ public class sorting {
             }
         }
     }
-    static void swap(int [] arr,int first ,int second){
+    static void swap(int [] arr,int first ,int second) {
         int temp = arr[first];
         arr[first] = arr[second];
-        arr [second] = temp;
+        arr[second] = temp;
     }
     static int getMaxIndex(int[] arr,int start, int end){
         int max = start;
