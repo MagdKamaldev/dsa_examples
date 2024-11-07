@@ -119,6 +119,11 @@ class BinaryTree{
         BinaryTree tree = new BinaryTree();
         tree.populate(new Scanner(System.in));
         tree.prettyDisplay();
+        tree.preOrder();
+        System.out.println("");
+        tree.inOrder();
+        System.out.println("");
+        tree.postOrder();
     }
 
 }
