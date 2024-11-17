@@ -1,5 +1,9 @@
 # Trees Problems
-## 993 cousins in a binary tree
+#
+## 1) BFS Problems
+#
+### // TODO: continue here
+### 993 cousins in a binary tree
 #### A) First we need to find both nodes that we want to compare using the findNode() method
 #### B) Then we compare their level using level() method which returns the level of the node as integer
 #### C) If they are at the same level they also must not be siblings which we check using isSiblings() method
@@ -63,8 +67,8 @@ class Solution {
     }
 }
 ```
-
-## 101 Symmetric tree
+#
+### 101 Symmetric tree
 
 ![Example](../../assets/trees_questions.png)
 #### A) We skip the root node for it doesn't affect what we are searching for
@@ -129,3 +133,57 @@ class Solution {
     }
 }
 ```
+#
+#
+## 2)DFS Problems
+#
+### 543 Diameter of a binary tree 
+### The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+### Example
+![Example](../../assets/pre_order.png)
+### Input: root = [1,2,3,4,5]
+### Output: 3
+### Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].
+
+#### Solution:
+#### Diameter of every Node you pass by is LeftHeight + rightHeight + 1
+#### we pass by all nodes to get all diameters in post order traversal
+#### so in every node we pass by we compare it's diameter with the value saved in diameter if it's greater we save it 
+#### in the end the value of the diameter will be greater than the answer we need by one for we need the path not the number of nodes se we return diameter - 1
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int diameter = 0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        height(root);
+        return diameter-1;
+    }
+    int height(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+
+        int dia = leftHeight + rightHeight +1;
+        diameter = Math.max(diameter , dia);
+        
+        return Math.max(leftHeight, rightHeight)+1;
+    }
+}
+```
+#
