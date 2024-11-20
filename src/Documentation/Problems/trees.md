@@ -187,3 +187,240 @@ class Solution {
 }
 ```
 #
+### 226. Invert Binary Tree
+### Given the root of a binary tree, invert the tree, and return its root.
+### Example
+![Example](../../assets/invert_binary_tree_example.png)
+### Input: root = [4,2,7,1,3,6,9]
+### Output: [4,7,2,9,6,3,1]
+#### Solution:
+#### save left in a variable left then make node.left = node.right and node.right the left variable we saved
+#### make recursive calls for root.left and root.right
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root ==null){
+            return root;
+        }
+        TreeNode left = root.left;
+        root.left = root.right;
+        root.right = left;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+}
+```
+#### kunal's approach was to make it in post order traversal :
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root ==null){
+            return root;
+        }
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+
+        root.left = right;
+        root.right =left;
+        return root;
+    }
+}
+```
+#
+### 108. Convert Sorted Array to Binary Search Tree
+### Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+### Example 1:
+### Input: nums = [-10,-3,0,5,9]
+### Output: [0,-3,9,-10,null,5]
+### Explanation: [0,-10,5,null,-3,null,9] is also accepted
+#### Solution:
+#### we create a helper function to recurse from it and it takes start and end attributes
+#### every lap we create a new node with mid value
+#### and recurse on it's left and right like this : 
+```java
+root.left = helper(nums, start, mid - 1);
+root.right = helper(nums, mid + 1, end);
+```
+#### in the end root will be returned
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helper(nums,0,nums.length-1);
+    }
+
+    public TreeNode helper(int[] nums, int start, int end){
+        if(start > end){
+            return null;
+        }
+        int mid = (start + end) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = helper(nums, start, mid - 1);
+        root.right = helper(nums, mid + 1, end);
+
+        return root;
+    }
+}
+```
+#
+### 114. Flatten Binary Tree to Linked List
+### Given the root of a binary tree, flatten the tree into a "linked list":
+### The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.
+### The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+### Example
+![Example](../../assets/flatten_binary_tree_example.png)
+### Input: root = [1,2,5,3,4,null,6]
+### Output: [1,null,2,null,3,null,4,null,5,null,6]
+#### 1) Brute force approach:
+#### make normal pre order traversal
+#### as you traverse store nodes in a queue
+#### in the end add items from the queue to make a linkedlist
+#
+#### 2) O(1) space complexity approach
+#### Save the root node to current variable and move right with a while loop that runs untill cuurent is null
+#### if current's left is not null save it in a variable called temp and move right untill temp.right = null and when you come out of this loop you will ena up at the right most element in the left part
+#### do this when you come out: 
+```java
+temp.right = current.right;
+current.right = current.left;
+current.left = null;
+```
+#### so the left node with all the other nodes connected to it will move on the right side
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void flatten(TreeNode root) {
+        TreeNode current = root;
+        while(current != null){
+            if(current.left != null){
+                TreeNode temp = current.left;
+                while(temp.right != null){
+                    temp = temp.right;
+                }
+                temp.right = current.right;
+                current.right = current.left;
+                current.left = null;
+            }
+            current = current.right;
+        }
+    }
+}
+```
+#
+###
+### 98. Validate Binary Search Tree
+### Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+### A valid BST is defined as follows:
+### The left subtree of a node contains only nodes with keys less than the node's key.
+### The right subtree of a node contains only nodes with keys greater than the node's key.
+### Both the left and right subtrees must also be binary search trees.
+### Example 1:
+![Example](../../assets/validate_bst_true_example.png)
+### Input: root = [2,1,3]
+### Output: true
+### Example 2:
+![Example](../../assets/validate_bst_false_example.png)
+### Input: root = [5,1,4,null,null,3,6]
+### Output: false
+### Explanation: The root node's value is 5 but its right child's value is 4.
+#### Solution:
+#### Make a helper recursive function that takes the root, upper and lower limit values which are both initially null
+#### check for the value of the current node to be greater than min and less than max
+#### for the next left call max will be node.val and next right min will be node.val
+![Example](../../assets/validate_bst_answer.png)
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return helper(root,null,null);
+    }
+
+    public boolean helper(TreeNode node,Integer min,Integer max){
+        if(node ==null){
+            return true;
+        }
+        if(min != null && node.val <= min){
+            return false;
+        }
+        if(max != null && node.val>= max){
+            return false;
+        }
+        boolean left = helper(node.left,min,node.val);
+        boolean right = helper(node.right,node.val,max);
+        return left && right;
+    }
+}
+```
