@@ -424,3 +424,213 @@ class Solution {
     }
 }
 ```
+#
+### 236. Lowest Common Ancestor of a Binary Tree
+### Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+### According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+### Example 1:
+![Example](../../assets/lowest_common_ancestor_example.png)
+### Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1
+### Output: 3
+### Explanation: The LCA of nodes 5 and 1 is 3.
+### Example 2:
+### Input: root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4
+### Output: 5
+### Explanation: The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.
+#### Solution:
+#### if the two nodes were one under the other so no need to check below and the answer will be the above one.
+#### so we make the function recirsive and check if root is null we return null and if the root is p or q we return root then recurse in left and right
+#### in the and if left and right both are not null we return the root for it is the answer
+#### if any of them is null we return the other one
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root ==null){
+            return null;
+        }
+        if(root == p || root == q){
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor(root.left,p,q);
+        TreeNode right = lowestCommonAncestor(root.right,p,q);
+        if(left != null && right != null){
+            return root;
+        }
+        return left == null ? right : left;
+    }
+}
+```
+#
+### 230. Kth Smallest Element in a BST
+### Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+### Example 1:
+![Example](../../assets/kth_smallest_in_bst_1.png)
+### Input: root = [3,1,4,null,2], k = 1
+### Output: 1
+### Example 2:
+![Example](../../assets/kth_smallest_in_bst_2.png)
+### Input: root = [5,3,6,2,4,null,null,1], k = 3
+### Output: 3
+#### Solution:
+#### we make a helper function to recurse and return TreeNode and make the null check base case
+#### we go left first then if left is not null return it to end the functionin this case
+#### then we add an integer count outside the function and after passing by the last case only, we increment it 
+#### when count reaches k we return the node we are at and if all these cases passed then the answer is on the rigth then recurse right
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int count = 0;
+    public int kthSmallest(TreeNode root, int k) {
+       return helper(root,k).val;
+    }
+    public TreeNode helper(TreeNode root, int k){
+         if(root == null){
+            return null;
+        }
+        TreeNode left = helper(root.left,k);
+        if (left!=null){
+            return left;
+        }
+        count++;
+        if(count == k){
+            return root;
+        }
+        return helper(root.right,k);
+    }
+}
+```
+# 
+### 105. Construct Binary Tree from Preorder and Inorder Traversal
+### Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+### Example 1:
+![Example](../../assets/construct_tree_from_pre_in_example.png)
+### Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+### Output: [3,9,20,null,null,15,7]
+### Example 2:
+### Input: preorder = [-1], inorder = [-1]
+### Output: [-1]
+#### Solution:
+#### the first item in the pre order traversal is the root node so we make index start it with zero and save the value of the first number in pre order in an int r
+#### we make a for loop untill we find this item in the inorder list and then make the index this item for the left of it will always be on the left and items on the right of it will always be on the right
+#### we then create a new node give it rhe tree that we have and make recursion calls for left and right with this logic
+```java
+ node.left = buildTree(Arrays.copyOfRange(preorder,1,index+1),Arrays.copyOfRange(preorder,0,index));
+node.right = buildTree(Arrays.copyOfRange(preorder,index+1,preorder.length),Arrays.copyOfRange(inorder,index+1, inorder.length));
+```
+#### then we return the new node we created after recursion calls
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if(preorder.length ==0){
+            return null;
+        }
+        int r = preorder[0];
+        int index = 0;
+        for(int i =0;i<inorder.length; i++){
+            if(inorder[i]==r){
+                index = i;
+            }
+        }
+        TreeNode node = new TreeNode(r);
+        node.left = buildTree(Arrays.copyOfRange(preorder,1,index+1),Arrays.copyOfRange(preorder,0,index));
+        node.right = buildTree(Arrays.copyOfRange(preorder,index+1,preorder.length),Arrays.copyOfRange(inorder,index+1, inorder.length));
+        return node;
+    }
+}
+```
+#
+### 112. Path Sum
+### Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+### A leaf is a node with no children.
+### Example 1:
+![Example](../../assets/path_sum_easy_example_1.png)
+### Input: root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+### Output: true
+### Explanation: The root-to-leaf path with the target sum is shown.
+### Example 2:
+![Example](../../assets/path_sum_easy_example_2.png)
+### Input: root = [1,2,3], targetSum = 5
+### Output: false
+### Explanation: There are two root-to-leaf paths in the tree:
+### (1 --> 2): The sum is 3.
+### (1 --> 3): The sum is 4.
+### There is no root-to-leaf path with sum = 5.
+### Example 3:
+### Input: root = [], targetSum = 0
+### Output: false
+### Explanation: Since the tree is empty, there are no root-to-leaf paths.
+#### Solution:
+#### if the root is null return false (base case)
+#### if you are in a leaf (left and right both are null) return weather target sum equals value of current node
+#### return left or right recursuve calls and target sum in next calls will be decreased by cuurentnode.val
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null){
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return targetSum == root.val;
+        }
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
+    }
+}
+```
+#
+
+
+
+

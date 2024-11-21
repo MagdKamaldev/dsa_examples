@@ -31,7 +31,7 @@ Car bugatti;
 ```
 ![Example](../../assets/heap_memory.png)
 
-## 4) A constructor defines what happems when the object is created, it's a special function that runs when you create an object and it allocates variables.
+## 4) A constructor defines what happens when the object is created, it's a special function that runs when you create an object and it allocates variables.
 ```java
 Car bugatti = new Car(mid,30k,5);
 ```
