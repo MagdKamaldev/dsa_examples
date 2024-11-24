@@ -630,6 +630,130 @@ class Solution {
 }
 ```
 #
+### 129. Sum Root to Leaf Numbers
+### You are given the root of a binary tree containing digits from 0 to 9 only.
+### Each root-to-leaf path in the tree represents a number.
+### For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
+### Return the total sum of all root-to-leaf numbers. Test cases are generated so that the answer will fit in a 32-bit integer.
+### A leaf node is a node with no children.
+### Example 1:
+![Example](../../assets/sum_root_to_leaf_numbers_example_1.png)
+### Input: root = [1,2,3]
+### Output: 25
+### Explanation:
+### The root-to-leaf path 1->2 represents the number 12.
+### The root-to-leaf path 1->3 represents the number 13.
+### Therefore, sum = 12 + 13 = 25.
+### Example 2:
+![Example](../../assets/sum_root_to_leaf_numbers_example_2.png)
+### Input: root = [4,9,0,5,1]
+### Output: 1026
+### Explanation:
+### The root-to-leaf path 4->9->5 represents the number 495.
+### The root-to-leaf path 4->9->1 represents the number 491.
+### The root-to-leaf path 4->0 represents the number 40.
+### Therefore, sum = 495 + 491 + 40 = 1026.
+#### Solution:
+#### make a helper function to maintain answer value
+#### make the base case retruning 0
+#### multiply answer by 10 and add current value to it
+#### if you are on the leaf node return answer to prevent it from returning zero
+#### recurse on left and right
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
+ * }
+ */
+class Solution {
+    public int sumNumbers(TreeNode root) {
+        return helper(root,0);
+    }
+
+    public int helper(TreeNode root,int answer){
+       if (root == null) {
+            return 0;
+        }       
+        answer= (10 *answer) + root.val;  
+        // to prevent it from returning 0 
+        if(root.left == null && root.right == null){
+            return answer;
+        }   
+        return helper(root.left,answer) + helper(root.right,answer);
+    }
+}
+```
+#
+### 124. Binary Tree Maximum Path Sum
+### A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+### The path sum of a path is the sum of the node's values in the path.
+### Given the root of a binary tree, return the maximum path sum of any non-empty path.
+### Example 1:
+![Example](../../assets/sum_root_to_leaf_numbers_example_1.png)
+### Input: root = [1,2,3]
+### Output: 6
+### Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+### Example 2:
+![Example](../../assets/binary_tree_maximum_path_sum_2.png)
+### Input: root = [-10,9,20,null,null,15,7]
+### Output: 42
+### Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
+#### Solution:
+#### Make a global answer integer and set it to Integer.MIN_VALUE and make a helper function with base case returning zero
+#### Make left and right recursion first and make sure they are both returning non-negative values 
+#### make a current pathSum variable that is left + right + node.val and set the answer to whatever greater from answer or pathSum
+#### return the greater item of left and right with root.val added to it
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxPathSum(TreeNode root) {
+       helper(root);
+       return answer;
+    }
+    int answer = Integer.MIN_VALUE;
+    public int helper(TreeNode root){
+        if(root ==null){
+            return 0;
+        }
+        int left = helper(root.left);
+        int right = helper(root.right);
+        left = Math.max(0,left);
+        right = Math.max(0,right);
+        int pathSum = left +right + root.val;
+        answer = Math.max(answer, pathSum);
+        return Math.max(left,right)+root.val;
+    }
+}
+```
+#
+
+
+
+
 
 
 
