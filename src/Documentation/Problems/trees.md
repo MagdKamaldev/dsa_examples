@@ -750,11 +750,411 @@ class Solution {
 }
 ```
 #
+### 110. Balanced Binary Tree
+### Given a binary tree, determine if it is height-balanced
+### Example 1:
+![Example](../../assets/balanced_binary_tree_example_1.png)
+### Input: root = [3,9,20,null,null,15,7]
+### Output: true
+### Example 2:
+![Example](../../assets/balanced_binary_tree_example_2.png)
+### Input: root = [1,2,2,3,3,null,null,4,4]
+### Output: false
+### Example 3:
+### Input: root = []
+### Output: true
+#### Solution:
+#### 1)my approach O(N^2):
+#### in every node i check for it's height using helper function and then return false if any height of left exceeds right by more than one
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root ==null){
+            return true;
+        }
+        boolean left = isBalanced(root.left);
+        boolean right = isBalanced(root.right);
+        return left && right && (Math.abs(helper(root.left) - helper(root.right)) <=1);
+    }
+    public int helper(TreeNode node){
+        if(node == null){
+            return 0;
+        }
+        return Math.max(helper(node.left) , helper(node.right)) +1;
+    }
+}
+```
+#### 2) O(N) Solution:
+#### Instead of making multiple calls to helper in each node, we can combine the balance check and height calculation in a single traversal. The idea is to traverse the tree once and calculate the height while checking if the tree is balanced.
+```java
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        // Perform a single DFS to check balance and calculate height
+        return checkBalance(root) != -1;
+    }
+    
+    // Helper function that returns the height of the tree if balanced, 
+    // otherwise returns -1 if the tree is unbalanced
+    public int checkBalance(TreeNode node) {
+        if (node == null) {
+            return 0;  // Base case: null node is balanced with height 0
+        }
+        
+        // Recursively check left subtree
+        int leftHeight = checkBalance(node.left);
+        if (leftHeight == -1) return -1;  // If left subtree is unbalanced, return -1
+        
+        // Recursively check right subtree
+        int rightHeight = checkBalance(node.right);
+        if (rightHeight == -1) return -1;  // If right subtree is unbalanced, return -1
+        
+        // If the current node is unbalanced (difference in height > 1), return -1
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return -1;
+        }
+        
+        // Return the height of the current node
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+}
+```
+#
+### 111. Minimum Depth of Binary Tree
+### Given a binary tree, find its minimum depth.
+### The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+### Note: A leaf is a node with no children.
+### Example 1:
+![Example](../../assets/minimum_depth_of_binary_tree_1.png)
+### Input: root = [3,9,20,null,null,15,7]
+### Output: 2
+### Example 2:
+![Example](../../assets/minimum_depth_of_binary_tree_2.png)
+### Input: root = [2,null,3,null,4,null,5,null,6]
+### Output: 5
+#### My soluiton O(N^2):
+#### in the main function i made a base case for if the root is null return zero and then return helper function that takes level starting from zero
+#### in the helper function : if node is null return 1 ,if left and right is one then return level +1 , recurse left and right and the  call Math.min if Math.min is greater than 1 only to handle the case when there's no left tree, else make it Math.max
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        return helper(root, 0);
+    }
 
+    public int helper(TreeNode node, int level) {
+        if (node == null) {
+            return 1;
+        }
+        if (node.left == null && node.right == null) {
+            return level + 1;
+        }
+        int left = helper(node.left, level + 1);
+        int right = helper(node.right, level + 1);
+        return Math.min(left, right)>1 ? Math.min(left, right): Math.max(left, right);
+    }
+}
+```
+#### A better O(N) solution: without using helper function make the base case return zero only if node is null, and if node.left is null return right recursion +1 and vice versa , if you passed the two conditions return Math.min of left recursion and right recursion +1 
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ * int val;
+ * TreeNode left;
+ * TreeNode right;
+ * TreeNode() {}
+ * TreeNode(int val) { this.val = val; }
+ * TreeNode(int val, TreeNode left, TreeNode right) {
+ * this.val = val;
+ * this.left = left;
+ * this.right = right;
+ * }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0; // Base case: no tree, depth is 0
+        }
 
+        // If one of the subtrees is null, we need to consider the non-null subtree only
+        if (root.left == null) {
+            return minDepth(root.right) + 1;
+        }
+        if (root.right == null) {
+            return minDepth(root.left) + 1;
+        }
 
+        // If both subtrees are non-null, calculate the min depth of both
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+    }
+}
+```
+#
+### 257. Binary Tree Paths
+### Given the root of a binary tree, return all root-to-leaf paths in any order.
+### A leaf is a node with no children.
+### Example 1:
+![Example](../../assets/binary_tree_paths.png)
+### Input: root = [1,2,3,null,5]
+### Output: ["1->2->5","1->3"]
+### Example 2:
+### Input: root = [1]
+### Output: ["1"]
+#### Solution: 
+#### initialize the answer array and call the void helper function if root is not null, the helper function takes the node,the answer array and string path
+#### it starts with base case and then and then adds node.val to the path string, then if we are in a leaf node and the path to the list
+#### else add this "->" and then recurse left and right
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> answer = new ArrayList<>();
+        if (root != null) {
+            helper(root, "", answer);
+        }
+        return answer;
+    }
 
+    private void helper(TreeNode node, String path, List<String> answer) {
+        if (node == null) {
+            return;
+        }
+        
+        // Add the current node's value to the path
+        path += node.val;
+        
+        // If it's a leaf node, finalize the path and add it to the answer
+        if (node.left == null && node.right == null) {
+            answer.add(path);
+        } else {
+            // If not a leaf, continue the path with "->"
+            path += "->";
+            helper(node.left, path, answer);
+            helper(node.right, path, answer);
+        }
+    }
+}
+```
+#
+### 404. Sum of Left Leaves
+### Given the root of a binary tree, return the sum of all left leaves.
+### A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
+### Example 1:
+![Example](../../assets/sum_of_left_leaves.png)
+### Input: root = [3,9,20,null,null,15,7]
+### Output: 24
+### Explanation: There are two left leaves in the binary tree, with values 9 and 15 respectively.
+### Example 2:
+### Input: root = [1]
+### Output: 0
+#### Solution:
+#### in the main function return zero if root is null, and make a helpr function that takes a boolean isLeft which starts with false
+#### in the helper function return zero in the base case, recurse left with true and right with false
+#### in the end return left and right and if isLeft is true and node.left and node.right is are both null (leaf node) add node.val, else add zero
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int sumOfLeftLeaves(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        return helper(root,false);
 
+    }
+    private int helper(TreeNode root,boolean isLeft){
+        if(root == null){
+            return 0;
+        }
+        int left = helper(root.left,true);
+        int right = helper(root.right,false);
+        return right + left + (isLeft && root.left == null && root.right == null ? root.val : 0);
+    }
+}
+```
+#
+### 530. Minimum Absolute Difference in BST
+### Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+### Example 1:
+![Example](../../assets/min_abs_dif_1.png)
+### Input: root = [4,2,6,1,3]
+### Output: 1
+### Example 2:
+![Example](../../assets/min_abs_dif_2.png)
+### Input: root = [1,0,48,null,null,12,49]
+### Output: 1
+### Constraints:
+### The number of nodes in the tree is in the range [2, 104].
+### 0 <= Node.val <= 105
+#### Solution O(N):
+#### make two global integers in the class prev which starts with null and minDiff which starts with max value
+#### in the base case we will return mindiff, then make an inorder traversal with left first then if the previous is not null we set minDiff to the minimum of minDiff or root.val - prev , then set prev to root.val anyways and traverse to the right to complete the inorder traversal and return minDiff
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    Integer prev = null;
+    int minDiff = Integer.MAX_VALUE;
+    public int getMinimumDifference(TreeNode root) {
+       if(root == null){
+        return minDiff;
+       }
+       getMinimumDifference(root.left);
+       if(prev!= null){
+        minDiff = Math.min(minDiff,root.val- prev);
+       }
+       prev= root.val;
+       getMinimumDifference(root.right);
+       return minDiff;
+    }
+}
+```
+#
+### 501. Find Mode in Binary Search Tree
+### Given the root of a binary search tree (BST) with duplicates, return all the mode(s) (i.e., the most frequently occurred element) in it.
+### If the tree has more than one mode, return them in any order.
+### Assume a BST is defined as follows:
+### The left subtree of a node contains only nodes with keys less than or equal to the node's key.
+### The right subtree of a node contains only nodes with keys greater than or equal to the node's key.
+### Both the left and right subtrees must also be binary search trees.
+### Example 1:
+![Example](../../assets/mode_of_bst.png)
+### Input: root = [1,null,2,2]
+### Output: [2]
+### Example 2:
+### Input: root = [0]
+### Output: [0]
+### Constraints:
+### The number of nodes in the tree is in the range [1, 104].
+### -105 <= Node.val <= 105
+#### Solution:
+#### we make for global variables currentValue, maxValue, maxCount and answer arraylist, and in the main function we call helper function then convert the arrayList to an normal array and return it
+#### in the void helper function we handle base case and then make the inorder traversal with a handleValue function in the middle that takes an integer val, with the following logic:
+#### if val equals to the currentValue, increment currentCount , else set currentValue to val and currentCount to one, and if currentCount is greater than max count set maxCount to current count and clear the answer array and add val to it, if current count equals to max count just add currentCount to the answer array
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int currentValue;
+    private int currentCount = 0;
+    private int maxCount = 0;
+    ArrayList<Integer> answer = new ArrayList<>();
+    public int[] findMode(TreeNode root) {     
+        helper(root);
+        return answer.stream().mapToInt(i -> i).toArray();
+    }
 
+    private void helper(TreeNode node){
+       if(node == null){
+        return;
+       }
+       helper(node.left);
+       handleValue(node.val);
+       helper(node.right);
+    }
+    private void handleValue(int val) {
+        if (val == currentValue) {
+            currentCount++;
+        } else {
+            currentValue = val;
+            currentCount = 1;
+        }
+        if (currentCount > maxCount) {
+            maxCount = currentCount;
+            answer.clear();
+            answer.add(val);
+        } else if (currentCount == maxCount) {
+            answer.add(val);
+        }
+    }
+}
+```
+ 
 
 
