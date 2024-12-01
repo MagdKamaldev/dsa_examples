@@ -14,6 +14,7 @@ class TreeNode {
     }
 }
 
+@SuppressWarnings("unused")
 class BFS{
     public static List<List<Integer>> bfs(TreeNode root){
      List<List<Integer>> answer = new ArrayList<>();
