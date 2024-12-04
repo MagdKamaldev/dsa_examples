@@ -22,6 +22,6 @@
 #### take the last element and replace it with the item you want to remove and remove it,then keep comparing the item with the criteria with left and right children and keep swapping if the criteria is met with the item that meets the criteria more from left and right.
 
 ### creating a heap from an unsorted array:
-![Example](../../assets/heap_from_unsorted_array.png)
+![Example](../../../assets/heap_from_unsorted_array.png)
 #### we have this array and want to make it a maxHeap which means that every node should be greater than it's children, which means we can skip all the leaf nodes for they have no children, and we know that in a complete binary tree leaf nodes are n/2 so all we care about are nodes from the start till n/2 and we will do a downheap for each node of these
 
