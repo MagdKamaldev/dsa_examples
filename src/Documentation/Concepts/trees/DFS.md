@@ -3,7 +3,7 @@
 #### Traversal types are:
 
 ### A)Pre Order Traversal
-![Example](../../assets/pre_order.png)
+![Example](../../../assets/pre_order.png)
 #### Node -> left -> right
 ```java
  void preOrder(Node node){
@@ -19,7 +19,7 @@
 ##### When you want to visit the root first and do something then move L -> R
 #
 ### B)In Order Traversal
-![Example](../../assets/in_order.png)
+![Example](../../../assets/in_order.png)
 #### left -> Node -> right
 ```java
  void inOrder(Node node){
@@ -35,7 +35,7 @@
 ##### In a Binary Search Tree when you want a lower or the lowest value
 #
 ### C)Post Order Traversal
-![Example](../../assets/post_order.png)
+![Example](../../../assets/post_order.png)
 #### left -> right -> Node
 ```java
  void postOrder(Node node){
@@ -54,7 +54,7 @@
 ## 543 Diameter of a binary tree 
 ### The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
 ### Example
-![Example](../../assets/diameter_example.png)
+![Example](../../../assets/diameter_example.png)
 ### Input: root = [1,2,3,4,5]
 ### Output: 3
 ### Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].

@@ -764,7 +764,7 @@ class Solution {
 ### Input: root = []
 ### Output: true
 #### Solution:
-#### 1)my approach O(N^2):
+#### 1)my approach O(N<sup>2</sup>):
 #### in every node i check for it's height using helper function and then return false if any height of left exceeds right by more than one
 ```java
 /**
@@ -846,7 +846,7 @@ class Solution {
 ![Example](../../assets/minimum_depth_of_binary_tree_2.png)
 ### Input: root = [2,null,3,null,4,null,5,null,6]
 ### Output: 5
-#### My soluiton O(N^2):
+#### My soluiton O(N<sup>2</sup>):
 #### in the main function i made a base case for if the root is null return zero and then return helper function that takes level starting from zero
 #### in the helper function : if node is null return 1 ,if left and right is one then return level +1 , recurse left and right and the  call Math.min if Math.min is greater than 1 only to handle the case when there's no left tree, else make it Math.max
 ```java

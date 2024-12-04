@@ -4,7 +4,7 @@
 
 ### how heaps work:
 #### heaps are stored in an array, but the are represented as a tree:
-![Example](../../assets/heap_tree_example.png)
+![Example](../../../assets/heap_tree_example.png)
 ### Properties:
 ### 1) Complete Binary tree
 ### 2) Array May not be sorted but Every Node value is >= all of it's children
