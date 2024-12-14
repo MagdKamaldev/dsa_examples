@@ -1,13 +1,24 @@
-package sorting;
+# Merge Sort Algorithm
 
-import java.util.Arrays;
+**Merge Sort** is a **divide and conquer** algorithm that divides the array into two halves, recursively sorts each half, and then merges the sorted halves. Merge Sort is known for its predictable time complexity, making it efficient for large datasets.
 
-public class MergeSort {
-    public static void main(String[] args) {
-     int[] arr= new int[]{8,56,34,46,89,13,24,2,4,7,6,9,1};
-     mergeSortInPlace(arr,0,arr.length);
-     System.out.println(Arrays.toString(arr));
-    }
+### Key Characteristics of Merge Sort:
+- **Time Complexity**: O(n log n), where `n` is the number of elements.
+  - This is because the array is split in half recursively (log n), and each half is merged in linear time (O(n)).
+- **Space Complexity**: O(n), as it requires additional space for temporary arrays used during the merging process.
+- **Stable**: Yes, Merge Sort is stable, meaning that equal elements maintain their relative order.
+- **Applicable**: Merge Sort works well for large datasets and is also used for external sorting where data is too large to fit into memory.
+
+### How Merge Sort Works:
+1. **Divide**: The array is divided into two halves.
+2. **Conquer**: Each half is recursively sorted.
+3. **Combine**: The two sorted halves are merged into one sorted array.
+
+---
+
+### Merge Sort Code Example
+
+```java
     static int[] mergeSort(int[] arr){
         if(arr.length ==1){
             return arr;
@@ -21,11 +32,12 @@ public class MergeSort {
 
     private static int[] merge(int[] first, int[] second) {
         int[] answer = new int[first.length+second.length];
-        int i = 0;
-        int j = 0;
-        int k = 0;
+        int i = 0;  // for second
+        int j = 0;  // For first
+        int k = 0;  // For the answer arrayx
 
         while(i<first.length && j< second.length){
+            // Makes the comparing logic and ends when one of first and second is finsihed
             if(first[i]<second[j]){
                 answer[k]= first[i];
                 i++;
@@ -35,13 +47,13 @@ public class MergeSort {
             }
             k++;
         }
-
+        // To complete if there are remaining items in first
         while(i<first.length){
             answer[k]= first[i];
             i++;
             k++;
         }
-
+        // To complete if there are remaining items in second
         while(j<second.length){
             answer[k]= second[j];
             j++;
@@ -49,7 +61,11 @@ public class MergeSort {
         }
         return  answer;
     }
+```
 
+### Merge Sort In Place Code Example
+
+```java
     static void mergeSortInPlace(int[] arr,int start, int end){
         if(end-start == 1){
             return;
@@ -98,4 +114,4 @@ public class MergeSort {
         // Step 5: Copy the merged result back into the original array
         System.arraycopy(answer, 0, arr, start, answer.length);
     }
-}
+```
