@@ -2,7 +2,7 @@ package Permutations;
 
 public class Permutations {
     public static void main(String[] args) {
-        permutations("","ab");
+        permutations("","abc");
     }
     static void permutations(String p,String up){
         if(up.isEmpty()){

@@ -9,18 +9,18 @@
 ### 1) Complete Binary tree
 ### 2) Array May not be sorted but Every Node value is >= all of it's children
 ### 3) Tree Structure: 
-#### A)root => (i = 1) which is the smallest, greatest item (whatever criteria)
-#### B) parent(i) = i/2
-#### C) left(i) = 2\*i
-#### D) right(i) = (2\*i)+1
-#### E) height = log(N)
+#### A) Root => (i = 1) which is the smallest, greatest item (whatever criteria)
+#### B)Parent(i) = i/2
+#### C) Left(i) = 2\*i
+#### D) Right(i) = (2\*i)+1
+#### E) Height = log(N)
 
-### inserting items in a heap:
+### Inserting items in a heap:
 #### insert at last and keep checking the criteria with parent and keep swapping with parent untill you meet the criteria, so it will be done in  O(LogN) time, this is called upheap method.
 
-### removing element from heap:
+### Removing element from heap:
 #### take the last element and replace it with the item you want to remove and remove it,then keep comparing the item with the criteria with left and right children and keep swapping if the criteria is met with the item that meets the criteria more from left and right.
 
-### creating a heap from an unsorted array:
+### Creating a heap from an unsorted array:
 ![Example](../../../assets/heap_from_unsorted_array.png)
-#### we have this array and want to make it a maxHeap which means that every node should be greater than it's children, which means we can skip all the leaf nodes for they have no children, and we know that in a complete binary tree leaf nodes are n/2 so all we care about are nodes from the start till n/2 and we will do a downheap for each node of these
+#### We have this array and want to make it a maxHeap which means that every node should be greater than it's children, which means we can skip all the leaf nodes for they have no children, and we know that in a complete binary tree leaf nodes are n/2 so all we care about are nodes from the start till n/2 and we will do a downheap for each node of these
