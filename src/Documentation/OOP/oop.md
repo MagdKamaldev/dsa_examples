@@ -560,3 +560,16 @@ public class AbstractClassExample {
 | **Definition**          | Hiding implementation details and showing only essential features. | Wrapping data and methods in a class to restrict access. |
 | **Focus**               | Focuses on the **what** of an object.        | Focuses on the **how** of protecting the data. |
 | **Achieved By**         | Abstract classes and interfaces.             | Private fields and public getters/setters.  |
+
+## 26) Acess modifiers: are keywords used to set the visibility and accessibility of classes, methods, constructors, and variables. 
+### Comparision between all access modifiers:
+                │ Class │ Package │ Subclass │ Subclass │ World
+                │       │         │(same pkg)│(diff pkg)│(diff pkg & not subclass)
+    ────────────┼───────┼─────────┼──────────┼──────────┼──────────────────────────
+    public      │   +   │    +    │    +     │     +    │   +
+    ────────────┼───────┼─────────┼──────────┼──────────┼──────────────────────────
+    protected   │   +   │    +    │    +     │     +    │
+    ────────────┼───────┼─────────┼──────────┼──────────┼──────────────────────────
+    no modifier │   +   │    +    │    +     │          │
+    ────────────┼───────┼─────────┼──────────┼──────────┼──────────────────────────
+    private     │   +   │         │          │          │

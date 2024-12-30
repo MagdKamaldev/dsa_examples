@@ -1155,6 +1155,21 @@ class Solution {
     }
 }
 ```
- 
-
-
+#
+### 105. Construct Binary Tree from Preorder and Inorder Traversal (Using HashMaps)
+### Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+### Example 1:
+![Example](../../assets/construct_tree_from_pre_in_example.png)
+### Input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+### Output: [3,9,20,null,null,15,7]
+### Example 2:
+### Input: preorder = [-1], inorder = [-1]
+### Output: [-1]
+#### Solution:
+#### we create a hashmap of integer as key and value and put inorder in it with the value as key and index as value then we create an integer array of one item (0)
+#### we call halper function that takes both arrays, int left, int right, the hashmap, and the int array with zero.
+#### in the helper function base case is when left is greater than right we return null, and we create an int current with starts with preOrder at the index of [the only item in the index array] (preorder[index[0]]) and then incerement this item.
+#### Then we create the new node with current as it's val and if left is equal to right means we are in a leaf nodde so we return the node we created.
+#### If we passed this we get the inorder index from the hashmap
+#### then node.left = recursive function with both arrays an left as it is, right is inorder index -1, map and index array as they are.
+#### node.right = recursive function with both arrays, left as inorder index +1 , right as it is, map and index as they are, then we return the current node
