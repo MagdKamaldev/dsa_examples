@@ -573,3 +573,243 @@ public class AbstractClassExample {
     no modifier │   +   │    +    │    +     │          │
     ────────────┼───────┼─────────┼──────────┼──────────┼──────────────────────────
     private     │   +   │         │          │          │
+
+## 27) Object class: is the topmost class in Java’s class hierarchy and serves as the root of the inheritance hierarchy.
+
+### Note: if java doesn't support multiple inheritance how may a class inherit another class and object class at the same time ?
+### Java supports single inheritance of classes but allows multiple inheritance of types through interfaces. Every class in Java implicitly inherits from the Object class unless it explicitly extends another class. Here’s how this works:
+### A) If a class does not extend any other class, it implicitly extends the Object class.
+```java
+class A {
+    // Inherits methods like toString(), hashCode(), equals() from Object
+}
+```
+### B) If a class extends another class, the Object class is part of the inheritance chain:
+```java
+class B extends A {
+    // B inherits A's methods and Object's methods through A
+}
+```
+### Java’s single inheritance rule ensures that a class can only explicitly extend one class at a time. The Object class is automatically placed at the top of the hierarchy, so it doesn’t need to be explicitly extended.
+```java
+class A {
+    void display() {
+        System.out.println("A's method");
+    }
+}
+
+class B extends A {
+    void show() {
+        System.out.println("B's method");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        B obj = new B();
+        obj.display(); // Inherited from A
+        obj.toString(); // Inherited from Object
+    }
+}
+```
+
+## 28) Object class Methods:
+
+### A) toString()
+### Signature: public String toString()
+###	Description: Returns a string representation of the object.
+###	Default Behavior: Returns a string in the format ClassName@HexHashCode.
+###	Usage: Often overridden in custom classes to provide meaningful string representations.
+```java
+class Example {
+    int value;
+    Example(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Example[value=" + value + "]";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Example obj = new Example(42);
+        System.out.println(obj); // Output: Example[value=42]
+    }
+}
+```
+### B) hashCode()
+### Signature: public int hashCode()
+###	Description: Returns an integer hash code for the object.
+###	Default Behavior: Provides a hash code based on the object’s memory address.
+###	Usage: Commonly used in hash-based collections like HashMap and HashSet.
+
+### C) equals()
+###	Signature: public boolean equals(Object obj)
+###	Description: Compares this object to the specified object for equality.
+###	Default Behavior: Compares references (returns true if both refer to the same object).
+###	Usage: Override this method to compare object contents for logical equality.
+```java
+class Example {
+    int value;
+
+    Example(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Example example = (Example) obj;
+        return value == example.value;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Example obj1 = new Example(42);
+        Example obj2 = new Example(42);
+        System.out.println(obj1.equals(obj2)); // Output: true
+    }
+}
+```
+
+### D) getClass()
+### Signature: public final Class<?> getClass()
+###	Description: Returns the runtime class of the object.
+### Usage: Useful for reflection or identifying the object’s class at runtime.
+```java
+public class Main {
+    public static void main(String[] args) {
+        String str = "Hello";
+        System.out.println(str.getClass().getName()); // Output: java.lang.String
+    }
+}
+```
+
+### E) clone()
+### Signature: protected Object clone() throws CloneNotSupportedException
+###	Description: Creates and returns a copy of the object.
+###	Default Behavior: Performs a shallow copy of the object.
+###	Usage: Must implement Cloneable interface and override the method to enable cloning.
+```java
+class Example implements Cloneable {
+    int value;
+
+    Example(int value) {
+        this.value = value;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Example obj = new Example(42);
+        Example clonedObj = (Example) obj.clone();
+        System.out.println(clonedObj.value); // Output: 42
+    }
+}
+```
+
+### F) finalize()
+###	Signature: protected void finalize() throws Throwable
+###	Description: Called by the garbage collector before reclaiming the object’s memory.
+###	Usage: Rarely used; typically avoided in favor of explicit resource management.
+### Note: As of Java 9, the finalize method is deprecated.
+
+### G) wait() (Overloaded)
+### Signatures:
+###	public final void wait() throws InterruptedException
+###	public final void wait(long timeout) throws InterruptedException
+###	public final void wait(long timeout, int nanos) throws InterruptedException
+###	Description: Causes the current thread to wait until another thread invokes notify() or notifyAll() on the same object.
+###	Usage: Used in multithreading for inter-thread communication.
+
+### H) notify()
+### Signature: public final void notify()
+### Description: Wakes up a single thread that is waiting on this object’s monitor.
+
+### I) notifyAll()
+###	Signature: public final void notifyAll()
+###	Description: Wakes up all threads that are waiting on this object’s monitor.
+
+## 29) Abstract class: is a class that is declared with the keyword abstract. It is a blueprint for other classes and cannot be instantiated directly. Abstract classes are designed to be extended by subclasses, which then implement or override the abstract methods defined in the abstract class.
+```java
+// Abstract class
+abstract class Animal {
+    // Abstract method (must be implemented by subclasses)
+    abstract void makeSound();
+
+    // Concrete method
+    void eat() {
+        System.out.println("This animal eats food.");
+    }
+}
+
+// Subclass
+class Dog extends Animal {
+    // Implement the abstract method
+    @Override
+    void makeSound() {
+        System.out.println("Woof Woof!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Animal a = new Animal(); // Error: Cannot instantiate an abstract class
+
+        Animal dog = new Dog(); // Polymorphism
+        dog.makeSound(); // Output: Woof Woof!
+        dog.eat();       // Output: This animal eats food.
+    }
+}
+```
+
+## 30) Interface: is a blueprint for a class that specifies a set of methods that the implementing class must define. Interfaces provide a way to achieve abstraction and multiple inheritance in Java.
+```java
+// Interface
+interface Animal {
+    void makeSound(); // Abstract method
+    default void eat() { // Default method
+        System.out.println("This animal eats food.");
+    }
+    static void info() { // Static method
+        System.out.println("Animal interface");
+    }
+}
+
+// Class implementing the interface
+class Dog implements Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("Woof Woof!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.makeSound(); // Output: Woof Woof!
+        dog.eat();       // Output: This animal eats food.
+        Animal.info();   // Output: Animal interface
+    }
+}
+```
+
+### Note: Differences Between Abstract Classes and Interfaces
+
+| Feature                  | Abstract Class                         | Interface                           |
+|--------------------------|-----------------------------------------|-------------------------------------|
+| **Keyword**              | `abstract`                             | `interface`                        |
+| **Methods**              | Can have abstract and concrete methods | Can have abstract, default, static, and private methods |
+| **Fields**               | Can have instance variables            | Can have only `public static final` constants |
+| **Inheritance**          | Single inheritance                     | Multiple inheritance (via `implements`) |
+| **Constructors**         | Can have constructors                  | Cannot have constructors            |
