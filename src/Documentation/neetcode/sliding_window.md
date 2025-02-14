@@ -1,6 +1,7 @@
-# Sliding window
+# Sliding window: 
+## uses two pointers to define a subarray (or substring) within the input structure. One pointer expands the window, and the other shrinks it to maintain constraints.
 
-## A) Fixed
+## A) Fixed length
 
 ### Q: given an array, return true if there are two elements within a window of size k that are equal
 
@@ -43,5 +44,47 @@
     }
 ```
 
-## A) Variable
+## A) Variable Length
 
+### Q: find the length of the longest subarray, with the same value at each position
+
+#### The solution here will be to use two pointers and start them bot from zero then make r increment every time and in the loop if nums[R] != nums[L] we make L equal to r to start searching for a new valid window and in every pass we make the answer variable the greatest of the answer value itself and R - L + 1
+```java
+public static int longestSubarray(int[] nums) {
+        int length = 0;
+        int L = 0;
+
+        for (int R = 0; R < nums.length; R++) {
+            if (nums[L] != nums[R]) {
+                L = R;
+            }
+            length = Math.max(length, R - L + 1);
+        }
+        return length;
+    }
+```
+
+### Q2: find the minimum length subarray, where the sum is greater than or equal to target. Assuming that all values are positive.
+
+#### Solution: close to the last one but using a total variable and increment and decrement values from it and we run a while loop that keeps incrementing l until total is less than target and in it we kep getiing min value for R-L+1 and the value already exists
+
+```java
+public static int shortestSubarray(int[] nums, int target) {
+        int L = 0, total = 0;
+        int length = Integer.MAX_VALUE;
+
+        for (int R = 0; R < nums.length; R++) {
+            total += nums[R];
+            while (total >= target) {
+                length = Math.min(R - L + 1, length);
+                total -= nums[L];
+                L++;
+            }
+        }
+
+        if (length ==  Integer.MAX_VALUE) {
+            return 0;
+        } 
+        return length;
+    }
+```

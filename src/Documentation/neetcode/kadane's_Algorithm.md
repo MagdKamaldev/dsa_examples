@@ -1,6 +1,7 @@
 # Kadane's Algorithm
 
-Kadane's Algorithm is an efficient method to solve the **maximum subarray sum problem**. It finds the largest sum of a contiguous subarray within a one-dimensional array of numbers, including both positive and negative values.
+Kadane's Algorithm is an efficient method to solve the **maximum subarray sum problem**.
+It finds the largest sum of a contiguous subarray within a one-dimensional array of numbers, including both positive and negative values.
 
 ---
 

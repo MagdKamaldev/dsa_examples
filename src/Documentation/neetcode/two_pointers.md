@@ -1,4 +1,25 @@
-# Two Pointers
+# Two Pointers:
+## used to traverse a data structure (typically an array or string) from different positions, often from the beginning and end, or from different indices.
+
+### Q: check if a given array is a palindrome
+
+#### we can use two pointers one at the start and one in the end and if they point to the same element increment start one and decrement the end one
+```java
+public static boolean isPalindrome(String word) {
+        int L = 0, R = word.length() - 1;
+        while (L < R) {
+            if (word.charAt(L) != word.charAt(R)) {
+                return false;
+            }       
+            L++;
+            R--;
+        }
+
+        return true;
+    }
+```
+
+# Problems
 
 ## 125. Valid Palindrome
 ### A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
